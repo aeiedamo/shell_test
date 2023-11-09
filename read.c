@@ -2,13 +2,16 @@
 
 char *readLine()
 {
-        char *line;
+        char *line = NULL;
         size_t buflen = 0;
-        ssize_t len = getline(&line, &buflen, stdin);
+        ssize_t len;
         errno = 0;
 
-        if (len < 0)
+        len = getline(&line, &buflen, stdin);
+        if (len == -1)
         {
+                if(line)
+                free(line);
                 if (errno)
                         perror("./shell: getline error");
                 exit(0);
