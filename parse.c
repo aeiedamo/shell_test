@@ -25,7 +25,7 @@ char **parse(char *line)
                         if (!tokens)
                         {
                                 perror("./shell: tokens error");
-                                exit(1);
+                                exit(0);
                         }
                 }
                 token = strtok(NULL, DELIMIT);

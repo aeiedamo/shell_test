@@ -11,7 +11,7 @@ char *readLine()
         {
                 if (errno)
                         perror("./shell: getline error");
-                exit(1);
+                exit(0);
         }
         return (line);
 }

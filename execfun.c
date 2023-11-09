@@ -21,15 +21,12 @@ void execfun(char **args)
         else if (pid == 0)
         {
                 _execvp_(args[0], args);
-                printf("./hsh: 1: %s:", args[0]);
-                perror(NULL);
-                exit(1);
+                fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+                exit(127);
         }
         else
         {
-                perror("./shell: 1:");
-                printf("./hsh: 1: %s:", args[0]);
-                perror(NULL);
-                exit(1);
+                fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
+                exit(127);
         }
 }
