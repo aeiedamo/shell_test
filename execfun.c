@@ -21,11 +21,15 @@ void execfun(char **args)
         else if (pid == 0)
         {
                 _execvp_(args[0], args);
-                perror("./shell: pid = 0");
+                printf("./hsh: 1: %s:", args[0]);
+                perror(NULL);
                 exit(1);
         }
         else
         {
-                perror("./shell: pid < 0");
+                perror("./shell: 1:");
+                printf("./hsh: 1: %s:", args[0]);
+                perror(NULL);
+                exit(1);
         }
 }

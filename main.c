@@ -15,4 +15,6 @@ int main(void)
                 free(tokens);
                 free(line);
         }
+        
+        return (0);
 }
