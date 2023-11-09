@@ -3,10 +3,9 @@
 int main(void)
 {
         char *line, **tokens;
-        char *prompt = " #cisfun$ ";
+        /*char *prompt = " #cisfun$ ";*/
         while(1)
         {
-                write(1, prompt, strlen(prompt));
                 line = readLine();
                 tokens = parse(line);
 
