@@ -20,7 +20,7 @@ void execfun(char **args)
         }
         else if (pid == 0)
         {
-                execve(_PATH_STDPATH, args, NULL);
+                _execvp_(args[0], args);
                 perror("./shell: pid = 0");
                 exit(1);
         }
