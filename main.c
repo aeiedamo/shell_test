@@ -3,18 +3,17 @@
 int main(void)
 {
         char *line, **tokens;
-        /*char *prompt = " #cisfun$ ";*/
-        while(1)
+        int status;
+        while (1)
         {
-                line = readLine();
-                tokens = parse(line);
+                line = read_line();
+                tokens = split_line(line);
 
-                if (tokens[0])
-                        execfun(tokens);
-                
-                free(tokens);
+                if (tokens)
+                {
+                        exit(execfun(tokens));
+                        free(tokens);
+                }
                 free(line);
         }
-        
-        return (0);
 }

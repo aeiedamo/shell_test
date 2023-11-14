@@ -1,18 +1,26 @@
 #include "main.h"
 
-void cdfun(char **args)
+int cdfun(char **args)
 {
         if (args[1] == NULL)
         {
-                fprintf(stderr, "./shell: cd missing arguments\n");
+                fprintf(stderr, "Error: cd: missing arguments\n");
+                return (1);
         }
-        else if (chdir(args[1]) != 0)
-                perror("./shell: no directory");
+        else
+        {
+                if (chdir(args[1]) != 0)
+                {
+                        perror("Error: cd:");
+                        return (1);
+                }
+        }
 }
 
-void exitfun(char **args)
+int exitfun(char **argv)
 {
-        if (args[1])
-                exit(atoi(args[1]));
+        if (argv[1])
+                exit(atoi(argv[1]));
         exit(0);
+        return (0);
 }

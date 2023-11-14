@@ -1,32 +1,46 @@
 #include "main.h"
 
-void execfun(char **args)
+struct builtin builtins[] = {
+        {"cd", cdfun},
+        {"exit", exitfun}
+};
+
+int builtins_num()
 {
-        int status;
-        pid_t pid;
+        return (sizeof(builtins) / sizeof (struct builtin));
+}
 
-        if (strcmp(args[0], "cd") == 0)
-                cdfun(args);
-        else if (strcmp(args[0], "exit") == 0)
-                exitfun(args);
-
-        pid = fork();
-        if (pid > 0)
+int execfun(char **args)
+{
+        int i;
+        pid_t childpid;
+        int status = 0;
+        for (i = 0; i < builtins_num(); i++)
+        {
+                if (strcmp(args[0], builtins[i].name) == 0)
+                {
+                        builtins[i].fun(args);
+                        return (1);
+                }
+        }
+        childpid = fork();
+        if (childpid == 0)
+        {
+                status = execvp(args[0], args);
+                perror("Error: ");
+                return (1);
+        }
+        else if (childpid > 0)
         {
                 do
                 {
-                        waitpid(pid, &status, WUNTRACED);
+                        waitpid(childpid, &status, WUNTRACED);
                 } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-        }
-        else if (pid == 0)
-        {
-                _execvp_(args[0], args);
-                fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-                exit(127);
+                return (0);
         }
         else
         {
-                fprintf(stderr, "./hsh: 1: %s: not found\n", args[0]);
-                exit(127);
+                perror("Error: ");
+                return (0);
         }
 }
